@@ -1,0 +1,15 @@
+name: TheHaunted
+version: 1.0
+main: de.daricari.thehaunted.TheHaunted
+author: DariCari
+description: 
+
+api-version: 1.13
+ 
+commands:
+  thehaunted:
+    usage: /<command>
+    description: Admin command
+  start:
+    usage: /<command>
+    description: Admin command

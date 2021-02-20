@@ -1,0 +1,9 @@
+#General
+general:
+   
+   #pages that will spawn per game
+   gamePages: 7
+   
+   #true if the server has the resourcepack installed
+   serverResourcepack: false
+   
