@@ -141,8 +141,8 @@ public class HauntedListener implements Listener
 				frame.setItem(null);
 				HauntedGame.hauntedGame.addFoundPage(player);
 				frame.getPersistentDataContainer().set(new NamespacedKey(plugin, "page"), PersistentDataType.INTEGER, 0);
-				event.setCancelled(true);
 			}
+			event.setCancelled(true);
 		}
 		else
 		{
