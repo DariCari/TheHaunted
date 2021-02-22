@@ -33,7 +33,7 @@ public class HauntedGameEvents
 	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	
 	/**
-	 * Teleport all players to a random added spawn location
+	 * Teleport all players to a random added spawn location and changes their gamemode to adventure
 	 */
 	public static void teleportPlayers()
 	{

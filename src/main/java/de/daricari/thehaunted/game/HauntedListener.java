@@ -328,5 +328,4 @@ public class HauntedListener implements Listener
 			HauntedGame.hauntedGame.endGame(true);
 		}
 	}
-	
 }
