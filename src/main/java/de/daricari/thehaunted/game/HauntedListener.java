@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,6 +23,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -32,6 +34,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
+
+import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 
 import de.daricari.thehaunted.TheHaunted;
 
@@ -43,7 +49,11 @@ public class HauntedListener implements Listener
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event)
 	{
-		
+		if(!HauntedGame.isActiveGame())
+			return;
+		if(HauntedGame.hauntedGame.getHaunted() == null)
+			return;
+		event.getPlayer().setGameMode(GameMode.SPECTATOR);
 	}
 	
 	/**Players can't move during timer**/
@@ -168,7 +178,8 @@ public class HauntedListener implements Listener
 		final Player player = event.getEntity();
 		player.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
 		event.getDrops().clear();
-		event.setDeathMessage("");
+		event.setDeathMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!"));
+		
 		
 		if(HauntedGame.hauntedGame.getHaunted().equals(event.getEntity()))
 		{
@@ -211,6 +222,7 @@ public class HauntedListener implements Listener
 		if(remainingPlayers <= 1)
 		{
 			HauntedGame.hauntedGame.endGame(true);
+			return;
 		}
 		
 	}
@@ -254,28 +266,6 @@ public class HauntedListener implements Listener
 				event.getEntity() instanceof Snowball)
 			return;
 		event.setCancelled(true);
-	}
-	
-	/**Changes gamemode of died people**/
-	public void onRespawn(PlayerRespawnEvent event)
-	{
-		NamespacedKey key = new NamespacedKey(plugin, "isDead");
-		if(HauntedGame.hauntedGame == null)
-			return;
-		if(HauntedGame.hauntedGame.getHaunted() == null)
-			return;
-		if(!HauntedGame.hauntedGame.isStarted() || !HauntedGame.isActiveGame())
-			return;
-		if(!event.getPlayer().getPersistentDataContainer().has(key, PersistentDataType.INTEGER))
-		{
-			event.getPlayer().setGameMode(GameMode.SPECTATOR);
-			return;
-		}
-		
-		if(event.getPlayer().getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 1)
-		{
-			event.getPlayer().setGameMode(GameMode.SPECTATOR);
-		}
 	}
 	
 	/**Makes the game end if theHaunted leaves**/

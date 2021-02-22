@@ -44,6 +44,8 @@ public class HauntedGameEvents
 			public void run() {
 				for(Player p : Bukkit.getOnlinePlayers())
 				{
+					p.setGameMode(GameMode.ADVENTURE);
+					
 						for(String l : TheHaunted.getSpawnLocations())
 						{
 							Location loc = LocationManager.fromString(l);
