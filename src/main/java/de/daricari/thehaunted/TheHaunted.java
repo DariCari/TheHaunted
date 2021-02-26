@@ -2,6 +2,7 @@ package de.daricari.thehaunted;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -26,6 +27,8 @@ public class TheHaunted extends JavaPlugin
 	@Override
 	public void onEnable() 
 	{
+		checkVersion();
+		
 		saveDefaultConfig();
 		loadLocations();
 		
@@ -41,6 +44,25 @@ public class TheHaunted extends JavaPlugin
 	public void onDisable() 
 	{
 		saveLocations();
+	}
+	
+	/**Checks the version and will cause an Exception if the version is not compatible**/
+	private void checkVersion()
+	{
+		String version = getServer().getVersion();
+		if(version.contains("Paper"))
+			return;
+		else if(version.contains("Spigot"))
+		{
+			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later! If you still wish to use Spigot, you can download version 1.0 of this plugin at https://github.com/DariCari/TheHaunted/releases/tag/1.0.");
+			setEnabled(false);
+		}
+		else
+		{
+			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later!");
+			setEnabled(false);
+		}
+			
 	}
 	
 	public static void startGame(CommandSender initiator)

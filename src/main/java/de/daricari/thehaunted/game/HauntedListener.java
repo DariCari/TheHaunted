@@ -23,7 +23,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -31,15 +30,11 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.spigotmc.event.player.PlayerSpawnLocationEvent;
-
-import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 
 import de.daricari.thehaunted.TheHaunted;
+import net.kyori.adventure.text.Component;
 
 public class HauntedListener implements Listener
 {
@@ -166,6 +161,7 @@ public class HauntedListener implements Listener
 	}
 	
 	/**Deaths of people**/
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event)
 	{
@@ -178,7 +174,12 @@ public class HauntedListener implements Listener
 		final Player player = event.getEntity();
 		player.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
 		event.getDrops().clear();
-		event.setDeathMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!"));
+		try {
+			event.deathMessage(Component.text(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!")));
+		}catch(NoClassDefFoundError ex)
+		{
+			event.setDeathMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!"));
+		}
 		
 		
 		if(HauntedGame.hauntedGame.getHaunted().equals(event.getEntity()))

@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.daricari.thehaunted.TheHaunted;
+import net.kyori.adventure.text.Component;
 
 public class HauntedGame 
 {
@@ -36,10 +37,13 @@ public class HauntedGame
 	{
 		if(Bukkit.getOnlinePlayers().size() > TheHaunted.getSpawnLocations().size())
 			throw new IndexOutOfBoundsException("There are more players online than set spawn locations!");
+		else if (Bukkit.getOnlinePlayers().size() < 2)
+			throw new IndexOutOfBoundsException("There are not enough players online to start a round!");
 		else if(plugin.getConfig().getInt("general.gamePages") > TheHaunted.getPageLocations().size())
 			throw new IndexOutOfBoundsException("The number of wanted pages is larger than the added pages!");
 		else if (TheHaunted.getSwordLocation() == null)
 			throw new NullPointerException("A sword location hasn't been set yet!");
+		
 		else
 		{
 			startGame();
@@ -149,63 +153,88 @@ public class HauntedGame
 		
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		
+		
 		//sword
 		ItemStack item = new ItemStack(Material.IRON_SWORD);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.DARK_PURPLE + "Haunted Sword");
+		
+		
+			meta.displayName(Component.text(ChatColor.DARK_PURPLE + "Haunted Sword"));
+		
 		item.setItemMeta(meta);
 		items.add(item);
+		
 		
 		//heal
 		ItemStack heal = new ItemStack(Material.IRON_SWORD);
 		ItemMeta healMeta = heal.getItemMeta();
 		heal.setType(Material.RED_DYE);
-		healMeta.setDisplayName(ChatColor.RED + "Heal");
+		
+		
+			healMeta.displayName(Component.text(ChatColor.RED + "Heal"));
+		
 		healMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "heal");
 		heal.setItemMeta(healMeta);
 		items.add(heal);
 		items.add(heal);
 		items.add(heal);
 		
+		
 		//grenade
 		ItemStack grenade = new ItemStack(Material.IRON_SWORD);
 		ItemMeta grenadeMeta = grenade.getItemMeta();
 		grenade.setType(Material.GUNPOWDER);
-		grenadeMeta.setDisplayName(ChatColor.YELLOW + "Grenade");
+		
+		
+			grenadeMeta.displayName(Component.text(ChatColor.YELLOW + "Grenade"));
+		
 		grenadeMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "grenade");
 		grenade.setItemMeta(grenadeMeta);
 		items.add(grenade);
 		items.add(grenade);
 		
+		
 		//speed
 		ItemStack speed = new ItemStack(Material.IRON_SWORD);
 		ItemMeta speedMeta = speed.getItemMeta();
 		speed.setType(Material.FEATHER);
-		speedMeta.setDisplayName(ChatColor.GRAY + "Speed (5s)");
+		
+		
+			speedMeta.displayName(Component.text(ChatColor.GRAY + "Speed (5s)"));
+		
 		speedMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "speed");
 		speed.setItemMeta(speedMeta);
 		items.add(speed);
+		
 		
 		//Batbomb
 		ItemStack batbomb = new ItemStack(Material.IRON_SWORD);
 		ItemMeta batbombMeta = batbomb.getItemMeta();
 		batbomb.setType(Material.TNT);
-		batbombMeta.setDisplayName(ChatColor.RED + "Batbomb");
+		
+		
+			batbombMeta.displayName(Component.text(ChatColor.RED + "Batbomb"));
+		
 		batbombMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "batbomb");
 		batbomb.setItemMeta(batbombMeta);
 		items.add(batbomb);
+		
 		
 		//freeze
 		ItemStack freeze = new ItemStack(Material.IRON_SWORD);
 		ItemMeta freezeMeta = freeze.getItemMeta();
 		freeze.setType(Material.ICE);
-		freezeMeta.setDisplayName(ChatColor.AQUA + "Freeze (3s)");
+		
+		
+			freezeMeta.displayName(Component.text(ChatColor.AQUA + "Freeze (3s)"));
+		
 		freezeMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "freeze");
 		freeze.setItemMeta(freezeMeta);
 		items.add(freeze);
 		
-		return items;
 		
+		
+		return items;
 		
 	}
 

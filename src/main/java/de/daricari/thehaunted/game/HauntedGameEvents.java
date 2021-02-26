@@ -27,6 +27,7 @@ import org.bukkit.scoreboard.Team.OptionStatus;
 
 import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.util.LocationManager;
+import net.kyori.adventure.text.Component;
 
 public class HauntedGameEvents 
 {
@@ -224,8 +225,7 @@ public class HauntedGameEvents
 							if(pages>=plugin.getConfig().getInt("general.gamePages"))
 							{
 								frame.getPersistentDataContainer().set(new NamespacedKey(plugin, "page"), PersistentDataType.INTEGER, 0);
-								frame.setItem(null);
-								frame.setInvulnerable(true);
+								frame.remove();
 								HauntedGame.hauntedGame.setUnfoundPages(pages);
 							}
 							else
@@ -233,7 +233,8 @@ public class HauntedGameEvents
 								frame.getPersistentDataContainer().set(new NamespacedKey(plugin, "page"), PersistentDataType.INTEGER, 1);
 								frame.setInvulnerable(true);
 								ItemStack paper = new ItemStack(Material.PAPER);
-								paper.getItemMeta().setDisplayName("Page");
+								paper.getItemMeta().displayName(Component.text("Page"));
+								
 								final ItemStack item = paper;
 								frame.setItem(item);
 								pages++;
