@@ -126,6 +126,8 @@ public class HauntedListener implements Listener
 	@EventHandler
 	public void onItemFrame(PlayerInteractEntityEvent event)
 	{
+		if(HauntedGame.hauntedGame == null)
+			return;
 		
 		Player player = event.getPlayer();
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -67,6 +68,11 @@ public class TheHaunted extends JavaPlugin
 	
 	public static void startGame(CommandSender initiator)
 	{
+		if(Bukkit.getOnlinePlayers().size() < 2)
+		{
+			TheHaunted.sendPluginMessage(initiator, "There are not enough players online to start a game!");
+			return;
+		}
 		try {
 			HauntedGame.hauntedGame = new HauntedGame();
 		}catch(Exception ex)
