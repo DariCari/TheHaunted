@@ -163,7 +163,6 @@ public class HauntedListener implements Listener
 	}
 	
 	/**Deaths of people**/
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event)
 	{
@@ -176,12 +175,7 @@ public class HauntedListener implements Listener
 		final Player player = event.getEntity();
 		player.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
 		event.getDrops().clear();
-		try {
-			event.deathMessage(Component.text(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!")));
-		}catch(NoClassDefFoundError ex)
-		{
-			event.setDeathMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!"));
-		}
+		event.deathMessage(Component.text(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!")));
 		
 		
 		if(HauntedGame.hauntedGame.getHaunted().equals(event.getEntity()))
