@@ -6,19 +6,17 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 
 import de.daricari.thehaunted.TheHaunted;
 
 public class LocationManager 
 {
-	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
+	//private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	//private static Logger logger = plugin.getLogger();
 	
 	public static boolean addSpawnLocation(Location spawnLoc)
@@ -87,12 +85,6 @@ public class LocationManager
 			locs.add(spLoc);
 			TheHaunted.getPageLocations().add(spLoc);
 			
-			NamespacedKey foundKey = new NamespacedKey(plugin, "isFound");
-			frame.getPersistentDataContainer().set(foundKey, PersistentDataType.INTEGER, 0);
-			
-			NamespacedKey pageKey = new NamespacedKey(plugin, "isPage");
-			frame.getPersistentDataContainer().set(pageKey, PersistentDataType.INTEGER, 1);
-			
 			frame.setItem(new ItemStack(Material.PAPER));
 			return true;
 		}
@@ -116,11 +108,6 @@ public class LocationManager
 		{
 			locs.remove(spLoc);
 			TheHaunted.getPageLocations().remove(spLoc);
-			
-			NamespacedKey key = new NamespacedKey(plugin, "isFound");
-			frame.getPersistentDataContainer().remove(key);
-			NamespacedKey pageKey = new NamespacedKey(plugin, "isPage");
-			frame.getPersistentDataContainer().set(pageKey, PersistentDataType.INTEGER, 0);
 			
 			frame.setItem(new ItemStack(Material.AIR));
 			
