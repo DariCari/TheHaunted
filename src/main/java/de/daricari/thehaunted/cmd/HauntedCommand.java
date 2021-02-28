@@ -21,7 +21,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 	public static String getUsage()
 	{
 		String PREFIX = "&8[&5TheHaunted&8]&3 ";
-		String usage = ChatColor.translateAlternateColorCodes('&', 
+		String usage = ChatColor.translateAlternateColorCodes('&', "\n" +
 				PREFIX + "Version &d" + plugin.getDescription().getVersion() + "\n" +
 				PREFIX + "&b/thehaunted addspawn &3|&b /thehaunted removespawn" + "\n" +
 				PREFIX + "&3Adds or removes the block you are currently looking at as a spawn location" + "\n" +
@@ -120,6 +120,10 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 	
 	List<String> arguments = new ArrayList<String>();
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+		
+		if(!sender.hasPermission("thehaunted.admin"))
+			return null;
+		
 		if (arguments.isEmpty()) {
 			arguments.add("addspawn");
 			arguments.add("removespawn");
