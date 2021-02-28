@@ -29,10 +29,10 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 				PREFIX + "&3Adds or removes the item frame you are currently looking at as a page" + "\n" +
 				PREFIX + "&b/thehaunted setsword" + "\n" + 
 				PREFIX + "&3Sets the location where the sword should spawn at the beginning of the game" + "\n" +
-				PREFIX + "&c/thehaunted forcestop" + "\n" +
+				PREFIX + "&b/thehaunted &cforcestop" + "\n" +
 				PREFIX + "&3Forces the game to stop immediately!" + "\n" +
 				PREFIX + "&a/start" + "\n" +
-				PREFIX + "&Starts the game"
+				PREFIX + "Starts the game"
 				);
 		
 		return usage;
