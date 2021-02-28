@@ -73,17 +73,14 @@ public class TheHaunted extends JavaPlugin
 	
 	public static void startGame(CommandSender initiator)
 	{
-		if(Bukkit.getOnlinePlayers().size() < 2)
-		{
-			TheHaunted.sendPluginMessage(initiator, "There are not enough players online to start a game!");
-			return;
-		}
 		try {
 			HauntedGame.hauntedGame = new HauntedGame();
 		}catch(Exception ex)
 		{
 			ex.printStackTrace();
-			TheHaunted.sendPluginMessage(initiator, "&cAn error occured while trying to start the game! Please check logs for more informaton.");
+			TheHaunted.sendPluginMessage(initiator, "An error occured while trying to start the game!");
+			TheHaunted.sendPluginMessage(initiator, "&cError: " + ex.getMessage());
+			TheHaunted.sendPluginMessage(initiator, "&cPlease check logs for more information.");
 			return;
 		}
 		TheHaunted.sendPluginMessage(initiator, "The game has been started!");
