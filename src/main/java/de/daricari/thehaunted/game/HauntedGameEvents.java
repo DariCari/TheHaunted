@@ -80,7 +80,7 @@ public class HauntedGameEvents
 			@Override
 			public void run() {
 				world.strikeLightningEffect(swordLoc);
-				world.dropItem(swordLoc, sword);
+				world.dropItemNaturally(swordLoc, sword);
 				world.setDifficulty(Difficulty.EASY);
 				world.setStorm(true);
 			}
@@ -92,7 +92,9 @@ public class HauntedGameEvents
 	/**Change Haunted player**/
 	public static void setHauntedPlayer(Player player)
 	{
-		HauntedGame.hauntedGame.setHaunted(player);
+		//also gives all players their stuff
+		HauntedGameEvents.addHauntedItems(player);
+		HauntedGameEvents.addEffects();
 		for(Player p : Bukkit.getOnlinePlayers())
 		{
 			TheHaunted.sendPluginMessage(p, "&b" + player.getName() + "&3 is now the haunted!");
@@ -130,6 +132,7 @@ public class HauntedGameEvents
 					
 					p.setHealth(20);
 					
+					p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*10, 5, false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 86400, 2, false, false));
 					continue;
 				}
@@ -276,7 +279,7 @@ public class HauntedGameEvents
 		}.runTaskLater(plugin, 20*15);
 	}
 	
-	/**Adds the items of the haunted to the player**/
+	/**Adds the items of the haunted to the player and gives 5 seconds of nausea**/
 	public static void addHauntedItems(Player haunted)
 	{
 		haunted.getInventory().clear();

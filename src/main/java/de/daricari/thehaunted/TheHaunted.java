@@ -14,7 +14,7 @@ import de.daricari.thehaunted.cmd.HauntedCommand;
 import de.daricari.thehaunted.cmd.StartCommand;
 import de.daricari.thehaunted.files.DataManager;
 import de.daricari.thehaunted.game.HauntedGame;
-import de.daricari.thehaunted.game.HauntedListener;
+import de.daricari.thehaunted.game.HauntedGameListener;
 import de.daricari.thehaunted.game.HauntedPlayerListener;
 
 public class TheHaunted extends JavaPlugin
@@ -35,9 +35,11 @@ public class TheHaunted extends JavaPlugin
 		
 		getCommand("thehaunted").setExecutor(new HauntedCommand());
 		getCommand("thehaunted").setTabCompleter(new HauntedCommand());
+		getCommand("thehaunted").setUsage(HauntedCommand.getUsage());
+		
 		getCommand("start").setExecutor(new StartCommand());
 		
-		getServer().getPluginManager().registerEvents(new HauntedListener(), this);
+		getServer().getPluginManager().registerEvents(new HauntedGameListener(), this);
 		getServer().getPluginManager().registerEvents(new HauntedPlayerListener(), this);
 	}
 	
@@ -52,10 +54,13 @@ public class TheHaunted extends JavaPlugin
 	{
 		String version = getServer().getVersion();
 		if(version.contains("Paper"))
+		{
+			getLogger().log(Level.INFO, "Make sure you are running at least Paper 498 in order to avoid any issues with this plugin");
 			return;
+		}
 		else if(version.contains("Spigot"))
 		{
-			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later! If you still wish to use Spigot, you can download version 1.0 of this plugin at https://github.com/DariCari/TheHaunted/releases/tag/1.0.");
+			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later! If you still wish to use Spigot, you can download version 1.0 of this plugin at https://github.com/DariCari/TheHaunted/releases/tag/1.0");
 			setEnabled(false);
 		}
 		else
@@ -78,13 +83,13 @@ public class TheHaunted extends JavaPlugin
 		}catch(Exception ex)
 		{
 			ex.printStackTrace();
-			TheHaunted.sendPluginMessage(initiator, "An error occured while trying to start the game! Please check logs for more informaton.");
+			TheHaunted.sendPluginMessage(initiator, "&cAn error occured while trying to start the game! Please check logs for more informaton.");
 			return;
 		}
 		TheHaunted.sendPluginMessage(initiator, "The game has been started!");
 	}
 	
-	public void loadLocations()
+	private void loadLocations()
 	{
 		yamlLocations = new DataManager(this, "data/locations.yml");
 		
@@ -103,7 +108,7 @@ public class TheHaunted extends JavaPlugin
 		
 		
 	}
-	public void saveLocations()
+	private void saveLocations()
 	{
 		//spawnLocations
 		yamlLocations.getFile().set("spawnLocations", spawnLocations);

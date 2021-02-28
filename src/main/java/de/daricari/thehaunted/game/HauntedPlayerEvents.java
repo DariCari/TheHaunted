@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Bat;
+import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -55,29 +56,40 @@ public class HauntedPlayerEvents
 		}.runTaskLater(plugin, 20*5);
 	}
 	
-	public static void batBomb(Player player)
-	{
+	public static void spawnBatEgg(Player player)
+	{	
 			Location loc = player.getEyeLocation();
 			World world = loc.getWorld();
-			new BukkitRunnable() 
-			{					
-				@Override
-				public void run() {
-					for(int i = 0; i<5; i++)
-						{
-							Bat bat = (Bat)world.spawnEntity(loc, EntityType.BAT);
-							new BukkitRunnable() {
+			NamespacedKey key = new NamespacedKey(plugin, "bat");
+			
+			Egg egg = (Egg)world.spawn(loc, Egg.class);
+			egg.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
+			egg.setShooter(player);
+			egg.setVelocity(loc.getDirection().multiply(1.5));
+	}
+	
+	public static void batBomb(Location loc)
+	{
+		World world = loc.getWorld();
+		new BukkitRunnable() 
+		{					
+			@Override
+			public void run() {
+				for(int i = 0; i<10; i++)
+					{
+						Bat bat = (Bat)world.spawnEntity(loc, EntityType.BAT);
+						new BukkitRunnable() {
+							
+							@Override
+							public void run() {
+								world.createExplosion(bat, loc, 2, false, false);
+								bat.remove();
 								
-								@Override
-								public void run() {
-									world.createExplosion(bat, loc, 4, false, false);
-									bat.remove();
-									
-								}
-							}.runTaskLater(plugin, 20*3);
-						}	
-				}
-			}.runTask(plugin);
+							}
+						}.runTaskLater(plugin, 20*3);
+					}	
+			}
+		}.runTask(plugin);
 	}
 	
 	public static void freeze(Player player)

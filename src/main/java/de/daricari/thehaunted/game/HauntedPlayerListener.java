@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -52,7 +53,7 @@ public class HauntedPlayerListener implements Listener
 					HauntedPlayerEvents.speed(player);
 					break;
 				case "batbomb":
-					HauntedPlayerEvents.batBomb(player);
+					HauntedPlayerEvents.spawnBatEgg(player);
 					break;
 				case "freeze":
 					HauntedPlayerEvents.freeze(player);
@@ -76,6 +77,22 @@ public class HauntedPlayerListener implements Listener
 				Location loc = event.getEntity().getLocation();
 				World world = loc.getWorld();
 				world.createExplosion(event.getEntity(), loc, 1, false, false);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onEgg(ProjectileHitEvent event)
+	{
+		if(event.getEntity() instanceof Egg || event.getEntityType().equals(EntityType.EGG))
+		{
+			PersistentDataContainer container = event.getEntity().getPersistentDataContainer();
+			NamespacedKey key = new NamespacedKey(plugin, "bat");
+			if(container.get(key, PersistentDataType.INTEGER) == 1)
+			{
+				Location loc = event.getEntity().getLocation();
+				HauntedPlayerEvents.batBomb(loc);
+				event.setCancelled(true);
 			}
 		}
 	}

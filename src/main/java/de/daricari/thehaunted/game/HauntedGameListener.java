@@ -36,7 +36,7 @@ import org.bukkit.persistence.PersistentDataType;
 import de.daricari.thehaunted.TheHaunted;
 import net.kyori.adventure.text.Component;
 
-public class HauntedListener implements Listener
+public class HauntedGameListener implements Listener
 {
 	private TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	
@@ -117,7 +117,7 @@ public class HauntedListener implements Listener
 		{
 			event.setCancelled(true);
 			event.getItem().remove();
-			HauntedGameEvents.setHauntedPlayer(player);
+			HauntedGame.hauntedGame.setHaunted(player);
 			player.playSound(player.getLocation(), Sound.ENTITY_WITHER_DEATH, 1, 1.8f);
 		}
 	}

@@ -123,10 +123,7 @@ public class HauntedGame
 	public void setHaunted(Player haunted) 
 	{
 		this.haunted = haunted;
-		
-		//also gives all players their stuff
-		HauntedGameEvents.addHauntedItems(haunted);
-		HauntedGameEvents.addEffects();
+		HauntedGameEvents.setHauntedPlayer(haunted);
 	}
 	
 	public List<ItemStack> getHauntedItems() {
@@ -158,7 +155,6 @@ public class HauntedGame
 		ItemStack item = new ItemStack(Material.IRON_SWORD);
 		ItemMeta meta = item.getItemMeta();
 		
-		
 			meta.displayName(Component.text(ChatColor.DARK_PURPLE + "Haunted Sword"));
 		
 		item.setItemMeta(meta);
@@ -169,7 +165,6 @@ public class HauntedGame
 		ItemStack heal = new ItemStack(Material.IRON_SWORD);
 		ItemMeta healMeta = heal.getItemMeta();
 		heal.setType(Material.RED_DYE);
-		
 		
 			healMeta.displayName(Component.text(ChatColor.RED + "Heal"));
 		
@@ -184,8 +179,7 @@ public class HauntedGame
 		ItemStack grenade = new ItemStack(Material.IRON_SWORD);
 		ItemMeta grenadeMeta = grenade.getItemMeta();
 		grenade.setType(Material.GUNPOWDER);
-		
-		
+	
 			grenadeMeta.displayName(Component.text(ChatColor.YELLOW + "Grenade"));
 		
 		grenadeMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "grenade");
@@ -198,8 +192,7 @@ public class HauntedGame
 		ItemStack speed = new ItemStack(Material.IRON_SWORD);
 		ItemMeta speedMeta = speed.getItemMeta();
 		speed.setType(Material.FEATHER);
-		
-		
+
 			speedMeta.displayName(Component.text(ChatColor.GRAY + "Speed (5s)"));
 		
 		speedMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "speed");
@@ -211,8 +204,7 @@ public class HauntedGame
 		ItemStack batbomb = new ItemStack(Material.IRON_SWORD);
 		ItemMeta batbombMeta = batbomb.getItemMeta();
 		batbomb.setType(Material.TNT);
-		
-		
+
 			batbombMeta.displayName(Component.text(ChatColor.RED + "Batbomb"));
 		
 		batbombMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "batbomb");
@@ -224,7 +216,6 @@ public class HauntedGame
 		ItemStack freeze = new ItemStack(Material.IRON_SWORD);
 		ItemMeta freezeMeta = freeze.getItemMeta();
 		freeze.setType(Material.ICE);
-		
 		
 			freezeMeta.displayName(Component.text(ChatColor.AQUA + "Freeze (3s)"));
 		

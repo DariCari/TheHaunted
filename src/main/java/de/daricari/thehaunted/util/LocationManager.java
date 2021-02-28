@@ -1,6 +1,5 @@
 package de.daricari.thehaunted.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -21,19 +20,14 @@ public class LocationManager
 	
 	public static boolean addSpawnLocation(Location spawnLoc)
 	{
-		int x=spawnLoc.getBlockX();
-		int y=spawnLoc.getBlockY();
-		int z=spawnLoc.getBlockZ();
+		if(spawnLoc == null)
+			return false;
+		
 		List<String> locs = TheHaunted.getSpawnLocations();
-		List<Location> locations = new ArrayList<Location>();
-		for(String s : locs)
+		String spLoc = toString(spawnLoc);
+		
+		if(!locs.contains(spLoc))
 		{
-			Location l = fromString(s);
-			locations.add(l);
-		}
-		if(!locations.contains(spawnLoc))
-		{
-			String spLoc = "X: " + x + " Y: " + y + " Z: " + z + " World: " + spawnLoc.getWorld().getName();
 			TheHaunted.getSpawnLocations().add(spLoc);
 			return true;
 		}
@@ -42,19 +36,14 @@ public class LocationManager
 	
 	public static boolean removeSpawnLocation(Location spawnLoc)
 	{
-		int x=spawnLoc.getBlockX();
-		int y=spawnLoc.getBlockY();
-		int z=spawnLoc.getBlockZ();
+		if(spawnLoc == null)
+			return false;
+		
 		List<String> locs = TheHaunted.getSpawnLocations();
-		List<Location> locations = new ArrayList<Location>();
-		for(String s : locs)
+		String spLoc = toString(spawnLoc);
+		
+		if(locs.contains(spLoc))
 		{
-			Location l = fromString(s);
-			locations.add(l);
-		}
-		if(locations.contains(spawnLoc))
-		{
-			String spLoc = "X: " + x + " Y: " + y + " Z: " + z + " World: " + spawnLoc.getWorld().getName();
 			TheHaunted.getSpawnLocations().remove(spLoc);
 			return true;
 		}
@@ -63,26 +52,20 @@ public class LocationManager
 	
 	public static boolean addPageLocation(Location pLoc, Entity e)
 	{
+		if(pLoc == null || e == null)
+			return false;
+		
 		if(!e.getType().equals(EntityType.ITEM_FRAME))
 		{
 			return false;
 		}
 		ItemFrame frame = (ItemFrame) e;
-		int x=pLoc.getBlockX();
-		int y=pLoc.getBlockY();
-		int z=pLoc.getBlockZ();
+		
 		List<String> locs = TheHaunted.getPageLocations();
-		List<Location> locations = new ArrayList<Location>();
-		for(String s : locs)
+		String spLoc = toString(pLoc);
+		
+		if(!locs.contains(spLoc))
 		{
-			Location l = fromString(s);
-			locations.add(l);
-			//logger.log(Level.INFO, s + " to " + l);
-		}
-		if(!locations.contains(pLoc))
-		{
-			String spLoc = "X: " + x + " Y: " + y + " Z: " + z + " World: " + pLoc.getWorld().getName();
-			locs.add(spLoc);
 			TheHaunted.getPageLocations().add(spLoc);
 			
 			frame.setItem(new ItemStack(Material.PAPER));
@@ -94,22 +77,23 @@ public class LocationManager
 	
 	public static boolean removePageLocation(Location pLoc, Entity e)
 	{
+		if(pLoc == null || e == null)
+			return false;
+		
 		if(!e.getType().equals(EntityType.ITEM_FRAME))
 		{
 			return false;
 		}
 		ItemFrame frame = (ItemFrame) e;
-		int x=pLoc.getBlockX();
-		int y=pLoc.getBlockY();
-		int z=pLoc.getBlockZ();
+		
 		List<String> locs = TheHaunted.getPageLocations();
-		String spLoc = "X: " + x + " Y: " + y + " Z: " + z + " World: " + pLoc.getWorld().getName();
+		String spLoc = toString(pLoc);
+		
 		if(locs.contains(spLoc))
 		{
-			locs.remove(spLoc);
 			TheHaunted.getPageLocations().remove(spLoc);
 			
-			frame.setItem(new ItemStack(Material.AIR));
+			frame.setItem(new ItemStack(Material.BARRIER));
 			
 			return true;
 		}
@@ -148,6 +132,18 @@ public class LocationManager
 		}
 		Location l = new Location(w, x, y, z);
 		return l;
+		
+	}
+	
+	public static String toString(Location loc)
+	{
+		int x=loc.getBlockX();
+		int y=loc.getBlockY();
+		int z=loc.getBlockZ();
+		
+		String sLoc = "X: " + x + " Y: " + y + " Z: " + z + " World: " + loc.getWorld().getName();
+		
+		return sLoc;
 		
 	}
 }

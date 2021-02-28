@@ -3,6 +3,7 @@ package de.daricari.thehaunted.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +16,26 @@ import de.daricari.thehaunted.util.LocationManager;
 
 public class HauntedCommand implements CommandExecutor, TabCompleter 
 {
+	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
+	
+	public static String getUsage()
+	{
+		String PREFIX = "&8[&5TheHaunted&8]&3 ";
+		String usage = ChatColor.translateAlternateColorCodes('&', 
+				PREFIX + "Version &d" + plugin.getDescription().getVersion() + "\n" +
+				PREFIX + "&b/addspawn &3|&b /removespawn" + "\n" +
+				PREFIX + "&3Adds or removes the block you are currently looking at as a spawn location" + "\n" +
+				PREFIX + "&b/addpage &3|&b /removepage" + "\n" +
+				PREFIX + "&3Adds or removes the item frame you are currently looking at as a page" + "\n" +
+				PREFIX + "&b/setsword" + "\n" + 
+				PREFIX + "&3Sets the location where the sword should spawn at the beginning of the game" + "\n" +
+				PREFIX + "&c/forcestop" + "\n" +
+				PREFIX + "&3Forces the game to stop immediately!"
+				);
+		
+		return usage;
+		
+	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -28,7 +49,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 			Player player = (Player) sender;
 			if(player.hasPermission("thehaunted.admin"))
 			{
-				if(args.length >= 1)
+				if(args.length == 1)
 				{
 					switch(args[0])
 					{
@@ -36,7 +57,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return false;
 						
 					case "addspawn":
-						if(LocationManager.addSpawnLocation(player.getTargetBlock(5).getLocation()))
+						if(player.getTargetBlock(5) != null && LocationManager.addSpawnLocation(player.getTargetBlock(5).getLocation()))
 							TheHaunted.sendPluginMessage(player, "Successfully added spawn location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not add spawn location!");
@@ -44,7 +65,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "removespawn":
-						if(LocationManager.removeSpawnLocation(player.getTargetBlock(5).getLocation()))
+						if(player.getTargetBlock(5) != null && LocationManager.removeSpawnLocation(player.getTargetBlock(5).getLocation()))
 							TheHaunted.sendPluginMessage(player, "Successfully removed spawn location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not remove spawn location!");
@@ -52,7 +73,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "addpage":
-						if(LocationManager.addPageLocation(player.getTargetEntity(5).getLocation(), player.getTargetEntity(5)))
+						if(player.getTargetEntity(5) != null && LocationManager.addPageLocation(player.getTargetEntity(5).getLocation(), player.getTargetEntity(5)))
 							TheHaunted.sendPluginMessage(player, "Successfully added page location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not add page location!");
@@ -60,7 +81,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "removepage":
-						if(LocationManager.removePageLocation(player.getTargetEntity(5).getLocation(), player.getTargetEntity(5)))
+						if(player.getTargetEntity(5) != null && LocationManager.removePageLocation(player.getTargetEntity(5).getLocation(), player.getTargetEntity(5)))
 							TheHaunted.sendPluginMessage(player, "Successfully removed page location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not remove page location!");
@@ -83,6 +104,12 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 					}
 				}
+				return false;
+			}
+			else
+			{
+				TheHaunted.sendPluginMessage(sender, "You do not have permission to execute this command!");
+				return true;
 			}
 		}
 		return false;
