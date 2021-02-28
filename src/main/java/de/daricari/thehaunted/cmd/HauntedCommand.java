@@ -23,14 +23,16 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 		String PREFIX = "&8[&5TheHaunted&8]&3 ";
 		String usage = ChatColor.translateAlternateColorCodes('&', 
 				PREFIX + "Version &d" + plugin.getDescription().getVersion() + "\n" +
-				PREFIX + "&b/addspawn &3|&b /removespawn" + "\n" +
+				PREFIX + "&b/thehaunted addspawn &3|&b /thehaunted removespawn" + "\n" +
 				PREFIX + "&3Adds or removes the block you are currently looking at as a spawn location" + "\n" +
-				PREFIX + "&b/addpage &3|&b /removepage" + "\n" +
+				PREFIX + "&b/thehaunted addpage &3|&b /thehaunted removepage" + "\n" +
 				PREFIX + "&3Adds or removes the item frame you are currently looking at as a page" + "\n" +
-				PREFIX + "&b/setsword" + "\n" + 
+				PREFIX + "&b/thehaunted setsword" + "\n" + 
 				PREFIX + "&3Sets the location where the sword should spawn at the beginning of the game" + "\n" +
-				PREFIX + "&c/forcestop" + "\n" +
-				PREFIX + "&3Forces the game to stop immediately!"
+				PREFIX + "&c/thehaunted forcestop" + "\n" +
+				PREFIX + "&3Forces the game to stop immediately!" + "\n" +
+				PREFIX + "&a/start" + "\n" +
+				PREFIX + "&Starts the game"
 				);
 		
 		return usage;
