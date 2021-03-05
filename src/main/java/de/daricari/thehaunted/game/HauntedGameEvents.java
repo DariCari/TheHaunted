@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -43,7 +42,7 @@ public class HauntedGameEvents
 		BukkitRunnable tpPlayers = new BukkitRunnable() {
 			@Override
 			public void run() {
-				for(Player p : Bukkit.getOnlinePlayers())
+				for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 				{
 					p.setGameMode(GameMode.ADVENTURE);
 					
@@ -95,7 +94,7 @@ public class HauntedGameEvents
 		//also gives all players their stuff
 		HauntedGameEvents.addHauntedItems(player);
 		HauntedGameEvents.addEffects();
-		for(Player p : Bukkit.getOnlinePlayers())
+		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			TheHaunted.sendPluginMessage(p, "&b" + player.getName() + "&3 is now the haunted!");
 		}
@@ -106,7 +105,7 @@ public class HauntedGameEvents
 	{
 		NamespacedKey key = new NamespacedKey(plugin, "isDead");
 		
-		for(Player p : Bukkit.getOnlinePlayers())
+		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			if(p.getPersistentDataContainer().has(key, PersistentDataType.INTEGER))
 				if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 1)
@@ -152,7 +151,7 @@ public class HauntedGameEvents
 	 * **/
 	public static void endGame(boolean hauntedWon)
 	{
-		Bukkit.getOnlinePlayers().forEach(player ->{
+		TheHaunted.getWorldManager().getOnlinePlayers().forEach(player ->{
 			player.getInventory().clear();
 			player.removePotionEffect(PotionEffectType.SLOW);
 			player.removePotionEffect(PotionEffectType.BLINDNESS);
@@ -175,14 +174,14 @@ public class HauntedGameEvents
 		
 		if(!hauntedWon)
 		{
-			for(Player p : Bukkit.getOnlinePlayers())
+			for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 			{
 				TheHaunted.sendPluginMessage(p,"The game has ended! &aThe Haunted lost.");
 			}
 		}
 		else
 		{
-			for(Player p : Bukkit.getOnlinePlayers())
+			for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 			{
 				TheHaunted.sendPluginMessage(p,"The game has ended! &cThe Haunted won.");
 			}
@@ -255,7 +254,7 @@ public class HauntedGameEvents
 	/**Heals all players**/
 	public static void healPlayers()
 	{
-		Bukkit.getOnlinePlayers().forEach(player -> {
+		TheHaunted.getWorldManager().getOnlinePlayers().forEach(player -> {
 			NamespacedKey key = new NamespacedKey(plugin, "isDead");
 			player.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 0);
 			
@@ -271,7 +270,7 @@ public class HauntedGameEvents
 			@Override
 			public void run() {
 				HauntedGame.hauntedGame.setProtectionPhase(false);
-				Bukkit.getOnlinePlayers().forEach(p -> {
+				TheHaunted.getWorldManager().getOnlinePlayers().forEach(p -> {
 					TheHaunted.sendPluginMessage(p, "Be aware! There is a haunted person among us..");
 				});
 				
@@ -297,7 +296,7 @@ public class HauntedGameEvents
 	{
 		if(plugin.getConfig().getBoolean("general.serverResourcepack"))
 		{
-			for(Player player : Bukkit.getOnlinePlayers())
+			for(Player player : TheHaunted.getWorldManager().getOnlinePlayers())
 			{
 				player.playSound(player.getLocation(), Sound.MUSIC_DISC_11, 1, 1);
 			}
@@ -316,7 +315,7 @@ public class HauntedGameEvents
 			return;
 		}
 		
-		for(Player p : Bukkit.getOnlinePlayers())
+		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_SCREAM, 1, 1);
 			TheHaunted.sendPluginMessage(p, "&b" + player.getName() + "&3 has found a page! (&d" + HauntedGame.hauntedGame.getUnfoundPages() + " remaining&3)");

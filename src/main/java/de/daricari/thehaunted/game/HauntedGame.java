@@ -3,7 +3,6 @@ package de.daricari.thehaunted.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,9 +34,9 @@ public class HauntedGame
 	
 	public HauntedGame()
 	{
-		if(Bukkit.getOnlinePlayers().size() > TheHaunted.getSpawnLocations().size())
+		if(TheHaunted.getWorldManager().getOnlinePlayers().size() > TheHaunted.getSpawnLocations().size())
 			throw new IndexOutOfBoundsException("There are more players online than set spawn locations!");
-		else if (Bukkit.getOnlinePlayers().size() < 2)
+		else if (TheHaunted.getWorldManager().getOnlinePlayers().size() < 2)
 			throw new IndexOutOfBoundsException("There are not enough players online to start a round!");
 		else if(plugin.getConfig().getInt("general.gamePages") > TheHaunted.getPageLocations().size())
 			throw new IndexOutOfBoundsException("The number of wanted pages is larger than the added pages!");
@@ -79,7 +78,7 @@ public class HauntedGame
 				if(count >= 20)
 				{
 					float time = count/20;
-					Bukkit.getOnlinePlayers().forEach(player -> {
+					TheHaunted.getWorldManager().getOnlinePlayers().forEach(player -> {
 						TheHaunted.sendPluginMessage(player, "The game starts in " + (int) time + " seconds!");
 						player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 					});

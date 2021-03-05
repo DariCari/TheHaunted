@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -44,6 +43,7 @@ public class HauntedGameListener implements Listener
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event)
 	{
+		
 		if(!HauntedGame.isActiveGame())
 			return;
 		if(HauntedGame.hauntedGame.getHaunted() == null)
@@ -181,7 +181,7 @@ public class HauntedGameListener implements Listener
 		if(HauntedGame.hauntedGame.getHaunted().equals(event.getEntity()))
 		{
 			int remainingPlayers = 0;
-			for(Player p : Bukkit.getOnlinePlayers())
+			for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 			{
 				if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 1)
 				{
@@ -204,7 +204,7 @@ public class HauntedGameListener implements Listener
 			return;
 		}
 		int remainingPlayers = 0;
-		for(Player p : Bukkit.getOnlinePlayers())
+		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 1)
 			{
@@ -280,7 +280,7 @@ public class HauntedGameListener implements Listener
 		if(HauntedGame.hauntedGame.getHaunted().equals(event.getPlayer()))
 		{
 			int remainingPlayers = 0;
-			for(Player p : Bukkit.getOnlinePlayers())
+			for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 			{
 				if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 1)
 				{
@@ -299,7 +299,7 @@ public class HauntedGameListener implements Listener
 			else
 			{
 				List<Player> players = new ArrayList<Player>();
-				Bukkit.getOnlinePlayers().forEach(p -> {
+				TheHaunted.getWorldManager().getOnlinePlayers().forEach(p -> {
 					players.add(p);
 				});
 				Collections.shuffle(players, new Random());
@@ -308,7 +308,7 @@ public class HauntedGameListener implements Listener
 			return;
 		}
 		int remainingPlayers = 0;
-		for(Player p : Bukkit.getOnlinePlayers())
+		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 1)
 			{

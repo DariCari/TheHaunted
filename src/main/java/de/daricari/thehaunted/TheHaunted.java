@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -16,10 +15,13 @@ import de.daricari.thehaunted.files.DataManager;
 import de.daricari.thehaunted.game.HauntedGame;
 import de.daricari.thehaunted.game.HauntedGameListener;
 import de.daricari.thehaunted.game.HauntedPlayerListener;
+import de.daricari.thehaunted.util.WorldManager;
 
 public class TheHaunted extends JavaPlugin
 {
 	private static DataManager yamlLocations;
+	
+	private static WorldManager worldManager;
 	
 	private static List<String> pageLocations = new ArrayList<String>();
 	private static List<String> spawnLocations = new ArrayList<String>();
@@ -32,6 +34,9 @@ public class TheHaunted extends JavaPlugin
 		
 		saveDefaultConfig();
 		loadLocations();
+		
+		worldManager = new WorldManager();
+		worldManager.loadWorlds();
 		
 		getCommand("thehaunted").setExecutor(new HauntedCommand());
 		getCommand("thehaunted").setTabCompleter(new HauntedCommand());
@@ -77,7 +82,9 @@ public class TheHaunted extends JavaPlugin
 			HauntedGame.hauntedGame = new HauntedGame();
 		}catch(Exception ex)
 		{
-			ex.printStackTrace();
+			if(TheHaunted.getPlugin(TheHaunted.class).getConfig().getBoolean("general.errorLogging"))
+				ex.printStackTrace();
+			
 			TheHaunted.sendPluginMessage(initiator, "An error occured while trying to start the game!");
 			TheHaunted.sendPluginMessage(initiator, "&cError: " + ex.getMessage());
 			TheHaunted.sendPluginMessage(initiator, "&cPlease check logs for more information.");
@@ -136,6 +143,10 @@ public class TheHaunted extends JavaPlugin
 		swordLocation = loc;
 	}
 	
+	public static WorldManager getWorldManager() {
+		return worldManager;
+	}
+
 	public static void sendPluginMessage(final CommandSender player, String message)
 	{
 		player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&3 " + message));

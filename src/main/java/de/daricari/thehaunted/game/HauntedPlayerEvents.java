@@ -1,6 +1,5 @@
 package de.daricari.thehaunted.game;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -99,7 +98,7 @@ public class HauntedPlayerEvents
 			
 			@Override
 			public void run() {
-				for(Player p : Bukkit.getOnlinePlayers())
+				for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 				{
 					if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 0)
 					{
@@ -113,7 +112,7 @@ public class HauntedPlayerEvents
 				
 			}
 		};
-		for(Player p : Bukkit.getOnlinePlayers())
+		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			if(p.getPersistentDataContainer().get(key, PersistentDataType.INTEGER) == 0)
 			{

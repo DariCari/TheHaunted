@@ -7,3 +7,17 @@ general:
    #true if the server has the resourcepack installed
    serverResourcepack: false
    
+   #Log errors in console
+   errorLogging: true
+   
+#World Management
+worlds:
+   
+   #true if you have one seperate world for the game, this will cause the plugin to only handle the players who are in that world
+   ownWorld: false
+   
+   #Type the name of the world you wish to use. Note that ownWorld has to be true for that
+   worldName: ""
+   
+   
+   
