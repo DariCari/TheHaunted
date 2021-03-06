@@ -15,6 +15,7 @@ import de.daricari.thehaunted.files.DataManager;
 import de.daricari.thehaunted.game.HauntedGame;
 import de.daricari.thehaunted.game.HauntedGameListener;
 import de.daricari.thehaunted.game.HauntedPlayerListener;
+import de.daricari.thehaunted.util.ScoreboardManager;
 import de.daricari.thehaunted.util.WorldManager;
 
 public class TheHaunted extends JavaPlugin
@@ -22,6 +23,8 @@ public class TheHaunted extends JavaPlugin
 	private static DataManager yamlLocations;
 	
 	private static WorldManager worldManager;
+	
+	private static ScoreboardManager scoreManager;
 	
 	private static List<String> pageLocations = new ArrayList<String>();
 	private static List<String> spawnLocations = new ArrayList<String>();
@@ -52,6 +55,9 @@ public class TheHaunted extends JavaPlugin
 	public void onDisable() 
 	{
 		saveLocations();
+		
+		if(HauntedGame.hauntedGame != null || HauntedGame.isActiveGame())
+			HauntedGame.hauntedGame.endGame(true);
 	}
 	
 	/**Checks the version and will cause an Exception if the version is not compatible**/
@@ -145,6 +151,13 @@ public class TheHaunted extends JavaPlugin
 	
 	public static WorldManager getWorldManager() {
 		return worldManager;
+	}
+	
+	public static ScoreboardManager getScoreManager() {
+		return scoreManager;
+	}
+	public static void initScoreManager() {
+		scoreManager = new ScoreboardManager();
 	}
 
 	public static void sendPluginMessage(final CommandSender player, String message)

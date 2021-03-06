@@ -21,8 +21,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Team.Option;
-import org.bukkit.scoreboard.Team.OptionStatus;
 
 import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.util.LocationManager;
@@ -115,13 +113,6 @@ public class HauntedGameEvents
 			p.removePotionEffect(PotionEffectType.SLOW);
 			p.removePotionEffect(PotionEffectType.BLINDNESS);
 			
-			if(p.getScoreboard().getTeam("default") == null)
-			{
-				p.getScoreboard().registerNewTeam("default");
-				p.getScoreboard().getTeam("default").setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.NEVER);
-			}
-			p.getScoreboard().getTeam("default").addEntry(p.getName());
-			
 			p.setFoodLevel(1);
 			if(p.equals(HauntedGame.hauntedGame.getHaunted()))
 				{
@@ -151,6 +142,7 @@ public class HauntedGameEvents
 	 * **/
 	public static void endGame(boolean hauntedWon)
 	{
+		TheHaunted.getScoreManager().clearScores();
 		TheHaunted.getWorldManager().getOnlinePlayers().forEach(player ->{
 			player.getInventory().clear();
 			player.removePotionEffect(PotionEffectType.SLOW);
@@ -229,6 +221,8 @@ public class HauntedGameEvents
 								frame.getPersistentDataContainer().set(new NamespacedKey(plugin, "page"), PersistentDataType.INTEGER, 0);
 								frame.remove();
 								HauntedGame.hauntedGame.setUnfoundPages(pages);
+								TheHaunted.initScoreManager();
+								TheHaunted.getScoreManager().updateScores();
 							}
 							else
 							{
@@ -318,7 +312,8 @@ public class HauntedGameEvents
 		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_SCREAM, 1, 1);
-			TheHaunted.sendPluginMessage(p, "&b" + player.getName() + "&3 has found a page! (&d" + HauntedGame.hauntedGame.getUnfoundPages() + " remaining&3)");
+			TheHaunted.sendPluginMessage(p, "&b" + player.getName() + "&3 has found a page! (&d" + HauntedGame.hauntedGame.getUnfoundPages() + " &3remaining&3)");
 		}
+		TheHaunted.getScoreManager().updateScores();
 	}
 }

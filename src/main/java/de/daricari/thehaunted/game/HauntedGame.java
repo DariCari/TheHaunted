@@ -109,6 +109,7 @@ public class HauntedGame
 			HauntedGameEvents.playSounds();
 			HauntedGameEvents.healPlayers();
 			HauntedGameEvents.startProt();
+
 		}
 		this.isStarted = isStarted;
 	}
