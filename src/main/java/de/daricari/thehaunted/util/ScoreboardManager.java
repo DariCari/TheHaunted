@@ -23,8 +23,9 @@ public class ScoreboardManager
 	private Score text;
 	private Score foundP;
 	
-	public ScoreboardManager()
+	public ScoreboardManager(TheHaunted plugin)
 	{
+		this.plugin = plugin;
 		setScoreboard();
 	}
 	

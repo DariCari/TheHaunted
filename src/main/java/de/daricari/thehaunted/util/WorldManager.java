@@ -13,12 +13,13 @@ import de.daricari.thehaunted.TheHaunted;
 
 public class WorldManager 
 {
-	private TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
+	private TheHaunted plugin;
 	
 	private static List<World> gameWorlds;
 	
 	
-	public WorldManager() {
+	public WorldManager(TheHaunted plugin) {
+		this.plugin = plugin;
 		gameWorlds = new ArrayList<World>();
 	}
 	

@@ -38,7 +38,7 @@ public class TheHaunted extends JavaPlugin
 		saveDefaultConfig();
 		loadLocations();
 		
-		worldManager = new WorldManager();
+		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
 		
 		getCommand("thehaunted").setExecutor(new HauntedCommand());
@@ -157,7 +157,7 @@ public class TheHaunted extends JavaPlugin
 		return scoreManager;
 	}
 	public static void initScoreManager() {
-		scoreManager = new ScoreboardManager();
+		scoreManager = new ScoreboardManager(TheHaunted.getPlugin(TheHaunted.class));
 	}
 
 	public static void sendPluginMessage(final CommandSender player, String message)
