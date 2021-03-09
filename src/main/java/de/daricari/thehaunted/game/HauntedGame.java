@@ -14,7 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.daricari.thehaunted.TheHaunted;
-import net.kyori.adventure.text.Component;
+import de.daricari.thehaunted.reflection.TextComponentBuilder;
 
 public class HauntedGame 
 {
@@ -155,7 +155,9 @@ public class HauntedGame
 		ItemStack item = new ItemStack(Material.IRON_SWORD);
 		ItemMeta meta = item.getItemMeta();
 		
-			meta.displayName(Component.text(ChatColor.DARK_PURPLE + "Haunted Sword"));
+		TextComponentBuilder text = new TextComponentBuilder(ChatColor.DARK_PURPLE + "Haunted Sword");
+		text.displayName(meta, text.getTextComponent());
+			//meta.displayName(Component.text(ChatColor.DARK_PURPLE + "Haunted Sword"));
 		
 		item.setItemMeta(meta);
 		items.add(item);
@@ -166,7 +168,9 @@ public class HauntedGame
 		ItemMeta healMeta = heal.getItemMeta();
 		heal.setType(Material.RED_DYE);
 		
-			healMeta.displayName(Component.text(ChatColor.RED + "Heal"));
+		TextComponentBuilder healText = new TextComponentBuilder(ChatColor.RED + "Heal");
+		healText.displayName(healMeta, healText.getTextComponent());
+			//healMeta.displayName(Component.text(ChatColor.RED + "Heal"));
 		
 		healMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "heal");
 		heal.setItemMeta(healMeta);
@@ -180,7 +184,9 @@ public class HauntedGame
 		ItemMeta grenadeMeta = grenade.getItemMeta();
 		grenade.setType(Material.GUNPOWDER);
 	
-			grenadeMeta.displayName(Component.text(ChatColor.YELLOW + "Grenade"));
+		TextComponentBuilder grenadeText = new TextComponentBuilder(ChatColor.YELLOW + "Grenade");
+		grenadeText.displayName(grenadeMeta, grenadeText.getTextComponent());
+			//grenadeMeta.displayName(Component.text(ChatColor.YELLOW + "Grenade"));
 		
 		grenadeMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "grenade");
 		grenade.setItemMeta(grenadeMeta);
@@ -193,7 +199,9 @@ public class HauntedGame
 		ItemMeta speedMeta = speed.getItemMeta();
 		speed.setType(Material.FEATHER);
 
-			speedMeta.displayName(Component.text(ChatColor.GRAY + "Speed (5s)"));
+		TextComponentBuilder speedText = new TextComponentBuilder(ChatColor.GRAY + "Speed (5s)");
+		speedText.displayName(speedMeta, speedText.getTextComponent());
+			//speedMeta.displayName(Component.text(ChatColor.GRAY + "Speed (5s)"));
 		
 		speedMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "speed");
 		speed.setItemMeta(speedMeta);
@@ -205,7 +213,9 @@ public class HauntedGame
 		ItemMeta batbombMeta = batbomb.getItemMeta();
 		batbomb.setType(Material.TNT);
 
-			batbombMeta.displayName(Component.text(ChatColor.RED + "Batbomb"));
+		TextComponentBuilder batText = new TextComponentBuilder(ChatColor.RED + "Batbomb");
+		batText.displayName(batbombMeta, batText.getTextComponent());
+			//batbombMeta.displayName(Component.text(ChatColor.RED + "Batbomb"));
 		
 		batbombMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "batbomb");
 		batbomb.setItemMeta(batbombMeta);
@@ -217,7 +227,9 @@ public class HauntedGame
 		ItemMeta freezeMeta = freeze.getItemMeta();
 		freeze.setType(Material.ICE);
 		
-			freezeMeta.displayName(Component.text(ChatColor.AQUA + "Freeze (3s)"));
+		TextComponentBuilder freezeText = new TextComponentBuilder(ChatColor.AQUA + "Freeze (3s)");
+		freezeText.displayName(freezeMeta, freezeText.getTextComponent());
+			//freezeMeta.displayName(Component.text(ChatColor.AQUA + "Freeze (3s)"));
 		
 		freezeMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "freeze");
 		freeze.setItemMeta(freezeMeta);

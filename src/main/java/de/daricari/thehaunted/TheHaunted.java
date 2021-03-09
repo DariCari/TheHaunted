@@ -64,20 +64,25 @@ public class TheHaunted extends JavaPlugin
 	private void checkVersion()
 	{
 		String version = getServer().getVersion();
+		
 		if(version.contains("Paper"))
 		{
-			getLogger().log(Level.INFO, "Make sure you are running at least Paper 498 in order to avoid any issues with this plugin");
-			return;
+			int pVersion = Integer.parseInt(version.split("-")[2].split(" ")[0]);
+			if(pVersion >= 498)
+				return;
+			else
+			{
+				getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later an might not function properly! - Current version: " + pVersion);
+			}
 		}
 		else if(version.contains("Spigot"))
 		{
-			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later! If you still wish to use Spigot, you can download version 1.0 of this plugin at https://github.com/DariCari/TheHaunted/releases/tag/1.0");
-			setEnabled(false);
+			getLogger().log(Level.INFO, "This plugin is recommended to run on Paper - Download at https://papermc.io/downloads#Paper-1.16");
 		}
 		else
 		{
-			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later!");
-			setEnabled(false);
+			getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498+ or Spigot!");
+			getServer().getPluginManager().disablePlugin(this);
 		}
 			
 	}

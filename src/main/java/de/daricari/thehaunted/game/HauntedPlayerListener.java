@@ -76,7 +76,7 @@ public class HauntedPlayerListener implements Listener
 			{
 				Location loc = event.getEntity().getLocation();
 				World world = loc.getWorld();
-				world.createExplosion(event.getEntity(), loc, 1, false, false);
+				world.createExplosion(loc, 1, false, false);
 			}
 		}
 	}
@@ -92,7 +92,6 @@ public class HauntedPlayerListener implements Listener
 			{
 				Location loc = event.getEntity().getLocation();
 				HauntedPlayerEvents.batBomb(loc);
-				event.setCancelled(true);
 			}
 		}
 	}

@@ -81,7 +81,7 @@ public class HauntedPlayerEvents
 							
 							@Override
 							public void run() {
-								world.createExplosion(bat, bat.getLocation(), 2, false, false);
+								world.createExplosion(bat.getLocation(), 2, false, false);
 								bat.remove();
 								
 							}

@@ -1,5 +1,6 @@
 package de.daricari.thehaunted.game;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,11 +34,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import de.daricari.thehaunted.TheHaunted;
-import net.kyori.adventure.text.Component;
+import de.daricari.thehaunted.reflection.TextComponentBuilder;
 
 public class HauntedGameListener implements Listener
 {
 	private TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
+	
+	/*private Class<?> componentClass;
+	private Method componentTextMethod;*/
 	
 	/**Player joins**/
 	@EventHandler
@@ -162,9 +166,17 @@ public class HauntedGameListener implements Listener
 		}
 	}
 	
-	/**Deaths of people**/
+	/**Deaths of people 
+	 * @throws ClassNotFoundException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException **/
+	//@SuppressWarnings("deprecation")
 	@EventHandler
-	public void onDeath(PlayerDeathEvent event)
+	public void onDeath(PlayerDeathEvent event) //throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException
 	{
 		if(!HauntedGame.isActiveGame())
 			return;
@@ -175,7 +187,26 @@ public class HauntedGameListener implements Listener
 		final Player player = event.getEntity();
 		player.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
 		event.getDrops().clear();
-		event.deathMessage(Component.text(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!")));
+		
+		TextComponentBuilder text = new TextComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!"));
+		text.deathMessage(event, text.getTextComponent());
+		/*try {
+			
+			componentClass = Class.forName("net.kyori.adventure.text.Component");
+			componentTextMethod = componentClass.getMethod(("text"), String.class);
+			
+			String comp = ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!");
+			Object textComponent = componentTextMethod.invoke(null, comp);
+			
+			Method deathMessageMethod = event.getClass().getMethod("deathMessage", componentClass);
+			deathMessageMethod.invoke(event, new Object[] {textComponent});
+			
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			event.setDeathMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!"));
+			plugin.getLogger().info("spigot");
+		}*/
+			
+		//event.deathMessage(Component.text(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&b " + event.getEntity().getName() + "&3 died!")));
 		
 		
 		if(HauntedGame.hauntedGame.getHaunted().equals(event.getEntity()))

@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Team.OptionStatus;
 
 import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.game.HauntedGame;
-import net.kyori.adventure.text.Component;
+import de.daricari.thehaunted.reflection.TextComponentBuilder;
 
 public class ScoreboardManager 
 {	
@@ -43,12 +43,18 @@ public class ScoreboardManager
 		});
 		
 		int unFoundPages;
-		if(HauntedGame.hauntedGame != null)
+		if(!(HauntedGame.hauntedGame.getUnfoundPages() == 0))
 			unFoundPages = HauntedGame.hauntedGame.getUnfoundPages();
 		else
 			unFoundPages = plugin.getConfig().getInt("general.gamePages");
 		
-		obj = board.registerNewObjective("hScoreboard", "dummy", Component.text(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&3")));
+		TextComponentBuilder textComp = new TextComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&3"));
+		textComp.scoreboardObjective(board, "hScoreboard", "dummy", textComp.getTextComponent());
+		
+		board.getObjectives().forEach(o -> {
+			obj = o;
+		});
+		
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
 		text = obj.getScore(ChatColor.translateAlternateColorCodes('&', "&3Pages remaining:"));

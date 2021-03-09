@@ -23,8 +23,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.daricari.thehaunted.TheHaunted;
+import de.daricari.thehaunted.reflection.TextComponentBuilder;
 import de.daricari.thehaunted.util.LocationManager;
-import net.kyori.adventure.text.Component;
 
 public class HauntedGameEvents 
 {
@@ -46,9 +46,17 @@ public class HauntedGameEvents
 					
 						for(String l : TheHaunted.getSpawnLocations())
 						{
+							boolean isOccupied = false;
+							
 							Location loc = LocationManager.fromString(l);
 							Location spawnLoc = new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY()+2, loc.getBlockZ());
-							if(spawnLoc.getNearbyPlayers(1, 3).isEmpty())
+							
+							for(Player play : TheHaunted.getWorldManager().getOnlinePlayers())
+							{
+								if(play.getLocation().distance(spawnLoc) <=2)
+									isOccupied = true;
+							}
+							if(!isOccupied)
 							{
 								p.teleport(new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY()+2, loc.getBlockZ()));
 								break;
@@ -221,15 +229,17 @@ public class HauntedGameEvents
 								frame.getPersistentDataContainer().set(new NamespacedKey(plugin, "page"), PersistentDataType.INTEGER, 0);
 								frame.remove();
 								HauntedGame.hauntedGame.setUnfoundPages(pages);
-								TheHaunted.initScoreManager();
-								TheHaunted.getScoreManager().updateScores();
 							}
 							else
 							{
 								frame.getPersistentDataContainer().set(new NamespacedKey(plugin, "page"), PersistentDataType.INTEGER, 1);
 								frame.setInvulnerable(true);
 								ItemStack paper = new ItemStack(Material.PAPER);
-								paper.getItemMeta().displayName(Component.text("Page"));
+								
+								TextComponentBuilder text = new TextComponentBuilder("Page");
+								text.displayName(paper.getItemMeta(), text.getTextComponent());
+								
+								//paper.getItemMeta().displayName(Component.text("Page"));
 								
 								final ItemStack item = paper;
 								frame.setItem(item);
@@ -238,6 +248,10 @@ public class HauntedGameEvents
 						}
 					}.runTaskLater(plugin, 2);
 				}
+				
+				TheHaunted.initScoreManager();
+				TheHaunted.getScoreManager().updateScores();
+				
 			}
 			
 		};
