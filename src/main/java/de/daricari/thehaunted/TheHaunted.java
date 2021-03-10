@@ -13,8 +13,8 @@ import de.daricari.thehaunted.cmd.HauntedCommand;
 import de.daricari.thehaunted.cmd.StartCommand;
 import de.daricari.thehaunted.files.DataManager;
 import de.daricari.thehaunted.game.HauntedGame;
-import de.daricari.thehaunted.game.HauntedGameListener;
-import de.daricari.thehaunted.game.HauntedPlayerListener;
+import de.daricari.thehaunted.game.GameListener;
+import de.daricari.thehaunted.player.PlayerListener;
 import de.daricari.thehaunted.util.ScoreboardManager;
 import de.daricari.thehaunted.util.WorldManager;
 
@@ -47,8 +47,8 @@ public class TheHaunted extends JavaPlugin
 		
 		getCommand("start").setExecutor(new StartCommand());
 		
-		getServer().getPluginManager().registerEvents(new HauntedGameListener(), this);
-		getServer().getPluginManager().registerEvents(new HauntedPlayerListener(), this);
+		getServer().getPluginManager().registerEvents(new GameListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 	}
 	
 	@Override

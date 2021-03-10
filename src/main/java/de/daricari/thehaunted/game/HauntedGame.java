@@ -60,7 +60,7 @@ public class HauntedGame
 			
 			@Override
 			public void run() {
-				HauntedGameEvents.teleportPlayers();
+				GameEvents.teleportPlayers();
 				startTimer();
 			}
 		});
@@ -104,11 +104,11 @@ public class HauntedGame
 	{
 		if(isStarted)
 		{	
-			HauntedGameEvents.spawnSword();
-			HauntedGameEvents.spawnPages();
-			HauntedGameEvents.playSounds();
-			HauntedGameEvents.healPlayers();
-			HauntedGameEvents.startProt();
+			GameEvents.spawnSword();
+			GameEvents.spawnPages();
+			GameEvents.playSounds();
+			GameEvents.healPlayers();
+			GameEvents.startProt();
 
 		}
 		this.isStarted = isStarted;
@@ -123,7 +123,7 @@ public class HauntedGame
 	public void setHaunted(Player haunted) 
 	{
 		this.haunted = haunted;
-		HauntedGameEvents.setHauntedPlayer(haunted);
+		GameEvents.setHauntedPlayer(haunted);
 	}
 	
 	public List<ItemStack> getHauntedItems() {
@@ -263,7 +263,7 @@ public class HauntedGame
 	/**Lowers the unfoundPages by 1 and checks if the game has ended**/
 	public void addFoundPage(Player player)
 	{
-		HauntedGameEvents.pageFound(player);
+		GameEvents.pageFound(player);
 	}
 	
 	/**Ends the game 
@@ -273,7 +273,7 @@ public class HauntedGame
 	 * **/
 	public void endGame(boolean hauntedWon)
 	{
-		HauntedGameEvents.endGame(hauntedWon);
+		GameEvents.endGame(hauntedWon);
 	}
 
 	/**

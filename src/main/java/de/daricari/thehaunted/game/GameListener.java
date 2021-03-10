@@ -36,7 +36,7 @@ import org.bukkit.persistence.PersistentDataType;
 import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.reflection.TextComponentBuilder;
 
-public class HauntedGameListener implements Listener
+public class GameListener implements Listener
 {
 	private TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	

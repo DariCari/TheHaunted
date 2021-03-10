@@ -26,7 +26,7 @@ import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.reflection.TextComponentBuilder;
 import de.daricari.thehaunted.util.LocationManager;
 
-public class HauntedGameEvents 
+public class GameEvents 
 {
 	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	
@@ -98,8 +98,8 @@ public class HauntedGameEvents
 	public static void setHauntedPlayer(Player player)
 	{
 		//also gives all players their stuff
-		HauntedGameEvents.addHauntedItems(player);
-		HauntedGameEvents.addEffects();
+		GameEvents.addHauntedItems(player);
+		GameEvents.addEffects();
 		for(Player p : TheHaunted.getWorldManager().getOnlinePlayers())
 		{
 			TheHaunted.sendPluginMessage(p, "&b" + player.getName() + "&3 is now the haunted!");

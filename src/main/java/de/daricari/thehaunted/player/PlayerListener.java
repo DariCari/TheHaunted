@@ -1,4 +1,4 @@
-package de.daricari.thehaunted.game;
+package de.daricari.thehaunted.player;
 
 import java.util.logging.Level;
 
@@ -18,8 +18,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import de.daricari.thehaunted.TheHaunted;
+import de.daricari.thehaunted.game.HauntedGame;
 
-public class HauntedPlayerListener implements Listener 
+public class PlayerListener implements Listener 
 {
 	private TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	
@@ -44,19 +45,19 @@ public class HauntedPlayerListener implements Listener
 					plugin.getLogger().log(Level.INFO, "Nothing found!");
 					return;
 				case "heal":
-					HauntedPlayerEvents.healPlayer(player);
+					PlayerEvents.healPlayer(player);
 					break;
 				case "grenade":
-					HauntedPlayerEvents.grenade(player);
+					PlayerEvents.grenade(player);
 					break;
 				case "speed":
-					HauntedPlayerEvents.speed(player);
+					PlayerEvents.speed(player);
 					break;
 				case "batbomb":
-					HauntedPlayerEvents.spawnBatEgg(player);
+					PlayerEvents.spawnBatEgg(player);
 					break;
 				case "freeze":
-					HauntedPlayerEvents.freeze(player);
+					PlayerEvents.freeze(player);
 					break;
 				}
 				player.getInventory().setItemInMainHand(null);
@@ -91,7 +92,7 @@ public class HauntedPlayerListener implements Listener
 			if(container.get(key, PersistentDataType.INTEGER) == 1)
 			{
 				Location loc = event.getEntity().getLocation();
-				HauntedPlayerEvents.batBomb(loc);
+				PlayerEvents.batBomb(loc);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package de.daricari.thehaunted.game;
+package de.daricari.thehaunted.player;
 
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -16,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.daricari.thehaunted.TheHaunted;
 
-public class HauntedPlayerEvents 
+public class PlayerEvents 
 {
 	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	
