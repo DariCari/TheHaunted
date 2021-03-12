@@ -72,7 +72,7 @@ public class TheHaunted extends JavaPlugin
 				return;
 			else
 			{
-				getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later an might not function properly! - Current version: " + pVersion);
+				getLogger().log(Level.SEVERE, "This plugin can only run on Paper 498 or later and might not function properly! - Current version: Paper " + pVersion);
 			}
 		}
 		else if(version.contains("Spigot"))

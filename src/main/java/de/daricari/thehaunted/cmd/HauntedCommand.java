@@ -2,16 +2,21 @@ package de.daricari.thehaunted.cmd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.game.HauntedGame;
+import de.daricari.thehaunted.util.EntityPredicate;
 import de.daricari.thehaunted.util.LocationManager;
 
 public class HauntedCommand implements CommandExecutor, TabCompleter 
@@ -27,6 +32,8 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 				PREFIX + "&3Adds or removes the block you are currently looking at as a spawn location" + "\n" +
 				PREFIX + "&b/thehaunted addpage &3|&b /thehaunted removepage" + "\n" +
 				PREFIX + "&3Adds or removes the item frame you are currently looking at as a page" + "\n" +
+				PREFIX + "&b/thehaunted showpages" + "\n" +
+				PREFIX + "&3Reveals all pages" + "\n" +
 				PREFIX + "&b/thehaunted setsword" + "\n" + 
 				PREFIX + "&3Sets the location where the sword should spawn at the beginning of the game" + "\n" +
 				PREFIX + "&b/thehaunted &cforcestop" + "\n" +
@@ -59,7 +66,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return false;
 						
 					case "addspawn":
-						if(player.getTargetBlock(5) != null && LocationManager.addSpawnLocation(player.getTargetBlock(5).getLocation()))
+						if(player.getTargetBlock((Set<Material>) null, 5) != null && LocationManager.addSpawnLocation(player.getTargetBlock((Set<Material>) null, 5).getLocation()))
 							TheHaunted.sendPluginMessage(player, "Successfully added spawn location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not add spawn location!");
@@ -67,7 +74,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "removespawn":
-						if(player.getTargetBlock(5) != null && LocationManager.removeSpawnLocation(player.getTargetBlock(5).getLocation()))
+						if(player.getTargetBlock((Set<Material>) null, 5) != null && LocationManager.removeSpawnLocation(player.getTargetBlock((Set<Material>) null, 5).getLocation()))
 							TheHaunted.sendPluginMessage(player, "Successfully removed spawn location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not remove spawn location!");
@@ -75,7 +82,15 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "addpage":
-						if(player.getTargetEntity(5) != null && LocationManager.addPageLocation(player.getTargetEntity(5).getLocation(), player.getTargetEntity(5)))
+						Entity addFrame;
+						try {
+							addFrame = player.getWorld().rayTraceEntities(player.getEyeLocation(), 
+									player.getEyeLocation().getDirection(), 15, new EntityPredicate(EntityType.ITEM_FRAME)).getHitEntity();
+						}catch(NullPointerException ex) {
+							addFrame = null;
+						}
+
+						if(addFrame != null && LocationManager.addPageLocation(addFrame.getLocation(), addFrame))
 							TheHaunted.sendPluginMessage(player, "Successfully added page location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not add page location!");
@@ -83,10 +98,26 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "removepage":
-						if(player.getTargetEntity(5) != null && LocationManager.removePageLocation(player.getTargetEntity(5).getLocation(), player.getTargetEntity(5)))
+						Entity removeFrame;
+						try {
+							removeFrame = player.getWorld().rayTraceEntities(player.getEyeLocation(), 
+									player.getEyeLocation().getDirection(), 15, new EntityPredicate(EntityType.ITEM_FRAME)).getHitEntity();
+						}catch(NullPointerException ex) {
+							removeFrame = null;
+						}
+						
+						if(removeFrame != null && LocationManager.removePageLocation(removeFrame.getLocation(), removeFrame))
 							TheHaunted.sendPluginMessage(player, "Successfully removed page location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not remove page location!");
+						
+						return true;
+						
+					case "showpages":
+						if(LocationManager.showAllPages())
+							TheHaunted.sendPluginMessage(player, "Successfully revealed all pages!");
+						else
+							TheHaunted.sendPluginMessage(player, "Could not reveal pages!");
 						
 						return true;
 						
@@ -129,6 +160,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 			arguments.add("removespawn");
 			arguments.add("addpage");
 			arguments.add("removepage");
+			arguments.add("showpages");
 			arguments.add("setsword");
 			arguments.add("forcestop");
 		}

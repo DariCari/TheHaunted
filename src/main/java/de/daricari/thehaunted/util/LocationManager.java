@@ -1,5 +1,6 @@
 package de.daricari.thehaunted.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -10,12 +11,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.daricari.thehaunted.TheHaunted;
+import de.daricari.thehaunted.game.HauntedGame;
 
 public class LocationManager 
 {
-	//private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
+	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
 	//private static Logger logger = plugin.getLogger();
 	
 	public static boolean addSpawnLocation(Location spawnLoc)
@@ -99,6 +102,33 @@ public class LocationManager
 		}
 		return false;
 		
+	}
+	
+	public static boolean showAllPages()
+	{
+		List<Location> locations = new ArrayList<Location>();
+		List<String> locs = TheHaunted.getPageLocations();
+		locs.forEach(s -> {
+			locations.add(fromString(s));
+		});
+		
+		if(!HauntedGame.isActiveGame())
+		{
+			locations.get(0).getWorld().getEntitiesByClass(ItemFrame.class).forEach(entity -> entity.remove());
+			new BukkitRunnable() {
+				
+				@Override
+				public void run() {
+					locations.forEach(loc ->{
+						ItemFrame frame = (ItemFrame) loc.getWorld().spawnEntity(loc, EntityType.ITEM_FRAME);
+						frame.setItem(new ItemStack(Material.PAPER));
+					});
+					
+				}
+			}.runTaskLater(plugin, 2);
+			return true;
+		}
+		return false;
 	}
 	
 	public static void setSwordLocation(Location loc)
