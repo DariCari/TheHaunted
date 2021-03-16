@@ -15,6 +15,7 @@ import de.daricari.thehaunted.files.DataManager;
 import de.daricari.thehaunted.game.HauntedGame;
 import de.daricari.thehaunted.game.GameListener;
 import de.daricari.thehaunted.player.PlayerListener;
+import de.daricari.thehaunted.util.LocationManager;
 import de.daricari.thehaunted.util.ScoreboardManager;
 import de.daricari.thehaunted.util.WorldManager;
 
@@ -25,6 +26,9 @@ public class TheHaunted extends JavaPlugin
 	private static WorldManager worldManager;
 	
 	private static ScoreboardManager scoreManager;
+	
+	private static LocationManager locationManager;
+	
 	
 	private static List<String> pageLocations = new ArrayList<String>();
 	private static List<String> spawnLocations = new ArrayList<String>();
@@ -37,6 +41,8 @@ public class TheHaunted extends JavaPlugin
 		
 		saveDefaultConfig();
 		loadLocations();
+		
+		locationManager = new LocationManager(this);
 		
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
@@ -164,11 +170,14 @@ public class TheHaunted extends JavaPlugin
 	public static void initScoreManager() {
 		scoreManager = new ScoreboardManager(TheHaunted.getPlugin(TheHaunted.class));
 	}
+	
+	public static LocationManager getLocationManager() {
+		return locationManager;
+	}
 
 	public static void sendPluginMessage(final CommandSender player, String message)
 	{
 		player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&5TheHaunted&8]&3 " + message));
 	}
-	
 	
 }

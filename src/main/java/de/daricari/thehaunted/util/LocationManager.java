@@ -18,10 +18,14 @@ import de.daricari.thehaunted.game.HauntedGame;
 
 public class LocationManager 
 {
-	private static TheHaunted plugin = TheHaunted.getPlugin(TheHaunted.class);
+	private TheHaunted plugin;
 	//private static Logger logger = plugin.getLogger();
 	
-	public static boolean addSpawnLocation(Location spawnLoc)
+	public LocationManager(TheHaunted plugin) {
+		this.plugin = plugin;
+	}
+	
+	public boolean addSpawnLocation(Location spawnLoc)
 	{
 		if(spawnLoc == null)
 			return false;
@@ -37,7 +41,7 @@ public class LocationManager
 		return false;
 	}
 	
-	public static boolean removeSpawnLocation(Location spawnLoc)
+	public boolean removeSpawnLocation(Location spawnLoc)
 	{
 		if(spawnLoc == null)
 			return false;
@@ -53,7 +57,7 @@ public class LocationManager
 		return false;
 	}
 	
-	public static boolean addPageLocation(Location pLoc, Entity e)
+	public boolean addPageLocation(Location pLoc, Entity e)
 	{
 		if(pLoc == null || e == null)
 			return false;
@@ -78,7 +82,7 @@ public class LocationManager
 		
 	}
 	
-	public static boolean removePageLocation(Location pLoc, Entity e)
+	public boolean removePageLocation(Location pLoc, Entity e)
 	{
 		if(pLoc == null || e == null)
 			return false;
@@ -104,7 +108,7 @@ public class LocationManager
 		
 	}
 	
-	public static boolean showAllPages()
+	public boolean showAllPages()
 	{
 		List<Location> locations = new ArrayList<Location>();
 		List<String> locs = TheHaunted.getPageLocations();
@@ -131,7 +135,7 @@ public class LocationManager
 		return false;
 	}
 	
-	public static void setSwordLocation(Location loc)
+	public void setSwordLocation(Location loc)
 	{
 		TheHaunted.setSwordLocation(loc);
 	}

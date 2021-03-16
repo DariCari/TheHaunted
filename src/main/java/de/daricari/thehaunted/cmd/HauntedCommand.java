@@ -17,7 +17,6 @@ import org.bukkit.entity.Player;
 import de.daricari.thehaunted.TheHaunted;
 import de.daricari.thehaunted.game.HauntedGame;
 import de.daricari.thehaunted.util.EntityPredicate;
-import de.daricari.thehaunted.util.LocationManager;
 
 public class HauntedCommand implements CommandExecutor, TabCompleter 
 {
@@ -66,7 +65,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return false;
 						
 					case "addspawn":
-						if(player.getTargetBlock((Set<Material>) null, 5) != null && LocationManager.addSpawnLocation(player.getTargetBlock((Set<Material>) null, 5).getLocation()))
+						if(player.getTargetBlock((Set<Material>) null, 5) != null && TheHaunted.getLocationManager().addSpawnLocation(player.getTargetBlock((Set<Material>) null, 5).getLocation()))
 							TheHaunted.sendPluginMessage(player, "Successfully added spawn location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not add spawn location!");
@@ -74,7 +73,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "removespawn":
-						if(player.getTargetBlock((Set<Material>) null, 5) != null && LocationManager.removeSpawnLocation(player.getTargetBlock((Set<Material>) null, 5).getLocation()))
+						if(player.getTargetBlock((Set<Material>) null, 5) != null && TheHaunted.getLocationManager().removeSpawnLocation(player.getTargetBlock((Set<Material>) null, 5).getLocation()))
 							TheHaunted.sendPluginMessage(player, "Successfully removed spawn location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not remove spawn location!");
@@ -90,7 +89,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 							addFrame = null;
 						}
 
-						if(addFrame != null && LocationManager.addPageLocation(addFrame.getLocation(), addFrame))
+						if(addFrame != null && TheHaunted.getLocationManager().addPageLocation(addFrame.getLocation(), addFrame))
 							TheHaunted.sendPluginMessage(player, "Successfully added page location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not add page location!");
@@ -106,7 +105,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 							removeFrame = null;
 						}
 						
-						if(removeFrame != null && LocationManager.removePageLocation(removeFrame.getLocation(), removeFrame))
+						if(removeFrame != null && TheHaunted.getLocationManager().removePageLocation(removeFrame.getLocation(), removeFrame))
 							TheHaunted.sendPluginMessage(player, "Successfully removed page location!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not remove page location!");
@@ -114,7 +113,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "showpages":
-						if(LocationManager.showAllPages())
+						if(TheHaunted.getLocationManager().showAllPages())
 							TheHaunted.sendPluginMessage(player, "Successfully revealed all pages!");
 						else
 							TheHaunted.sendPluginMessage(player, "Could not reveal pages!");
@@ -122,7 +121,7 @@ public class HauntedCommand implements CommandExecutor, TabCompleter
 						return true;
 						
 					case "setsword":
-						LocationManager.setSwordLocation(player.getLocation());
+						TheHaunted.getLocationManager().setSwordLocation(player.getLocation());
 						TheHaunted.sendPluginMessage(player, "Successfully set sword location!");
 						return true;
 						
